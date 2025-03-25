@@ -8,9 +8,6 @@ app = Flask(__name__)
 with open("hybrid_mileage_model.pkl", "rb") as file:
     model = pickle.load(file)
 
-with open("linear_regression_model.pkl", "rb") as file:
-    lr_model = pickle.load(file)
-
 @app.route("/")
 def home():
     return render_template("index.html")
@@ -28,7 +25,7 @@ def predict():
         # 🔹 Prepare input array with exactly 5 features
         input_features = np.array([[engine_size, cylinders, transmission, drive_type, fuel_type]])
 
-        # 🔹 Predict mileage using the hybrid model
+        # 🔹 Predict mileage using the model
         predicted_mileage = model.predict(input_features)[0]
 
         return render_template("index.html", prediction_text=f"Predicted Mileage: {predicted_mileage:.2f} MPG")
